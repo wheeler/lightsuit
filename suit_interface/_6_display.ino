@@ -29,7 +29,7 @@ void drawInterface()
   
     if (interfaceState == INTERFACE_CUSTOMIZE_PROGRAM || interfaceState == INTERFACE_CUSTOMIZE_PROGRAM_EDIT)
     {
-        display.setCursor(38, 0);  display.print("Edit ");display.print(programNames[program]);
+        display.setCursor(38, 0);  display.print("Edit ");display.print(programs.getProgramName(program));
         //display.setCursor(33, 8+(rotaryValue*8)); display.print(">");
         
         for (int i = 0 ; i < number_of_properties ; i++)
@@ -60,7 +60,6 @@ void drawInterface()
     }
     else //INTERFACE_SELECT_PROGRAM
     {
-      
         if (program == rotaryValue && program != 0)
         {
             display.setCursor(31, (program-programModeScroll)*8);
@@ -72,13 +71,13 @@ void drawInterface()
             display.print(">");
         }
         
-        for (int i = programModeScroll ; i < programModeScroll + ROWS_OF_TEXT && i < sizeof(programNames) ; i++)
+        for (int i = programModeScroll ; i < programModeScroll + ROWS_OF_TEXT && i < number_of_programs ; i++)
         {
             if (rotaryValue == i)
                 display.setTextColor(BLACK, WHITE);
             else
                 display.setTextColor(WHITE, BLACK);
-            display.setCursor(42, (i-programModeScroll)*8);  display.print(programNames[i]);
+            display.setCursor(42, (i-programModeScroll)*8);  display.print(programs.getProgramName(i));
         }
     }
 

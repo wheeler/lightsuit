@@ -21,7 +21,7 @@ char* propertyNames[] = {"Save",
                          "Tempo",
                          "Eq Band"};//{"Save","Mode","Speed","Duty","Thickness","Fade","Brightness","Input"};
 
-short number_of_programs = sizeof(programNames)/2;
+short number_of_programs = programs.numberOfPrograms();
 short number_of_properties = sizeof(propertyNames)/2;
 
 

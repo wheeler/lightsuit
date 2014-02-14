@@ -18,11 +18,9 @@ void setup()
   pinMode(rot1_up_pin, INPUT);
   pinMode(rot1_down_pin, INPUT);
   pinMode(rot1_button_pin, INPUT);
-    
+
   digitalWrite(rot1_up_pin, HIGH );
   digitalWrite(rot1_down_pin, HIGH );
   digitalWrite(rot1_button_pin, HIGH );
-  
-  //int settingsSize = sizeof(settings);
 }
 

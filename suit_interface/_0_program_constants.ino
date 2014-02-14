@@ -23,6 +23,77 @@
 #define PROGRAM_GRADIENT_BOUNCE_ID   20
 #define PROGRAM_FLICKER_ID           21
 
+
+typedef struct {
+  int id;
+  String name;
+} ProgramSetting;
+
+const ProgramSetting EMPTY_PROGRAM = {-1,"empty"};
+
+
+void printStruct(ProgramSetting *in);
+void printStruct(ProgramSetting *in)
+{
+    Serial.print(in->id);
+    Serial.print('-');
+    Serial.print(in->name);
+};
+
+class Programs
+{
+    public:
+        Programs();
+        void addProgram(ProgramSetting *in);
+        void printPrograms();
+        int numberOfPrograms();
+        String getProgramName(int idx);
+
+    private:
+        int count;
+        ProgramSetting programs[22];
+};
+
+Programs programs;
+
+Programs::Programs()
+{
+    count = 0;
+}
+
+void Programs::addProgram(ProgramSetting *in)
+{
+    programs[count] = *in;
+    count++;
+}
+
+int Programs::numberOfPrograms()
+{
+    return count;
+}
+
+String Programs::getProgramName(int idx)
+{
+    return programs[idx].name;
+}
+
+
+void setupPrograms()
+{
+    ProgramSetting a;
+    a = EMPTY_PROGRAM;
+    a.id = PROGRAM_OFF_ID;
+    a.name = "Off";
+    programs.addProgram(&a);
+    
+    ProgramSetting vueter = EMPTY_PROGRAM;
+    a.id = PROGRAM_VU_METER_ID;
+    a.name = "VU Meter";
+    programs.addProgram(&a);
+}
+
+
+
 char* PROGRAM_00_NAME = "Off";
 char* PROGRAM_01_NAME = "VU Meter";
 char* PROGRAM_02_NAME = "Accel Bnc";
@@ -49,11 +120,11 @@ char* PROGRAM_20_NAME = "Gradient Bnc";
 char* PROGRAM_21_NAME = "Flicker";
 
 //STORED PROGRAM DATA
-char* programNames[] = {
-  PROGRAM_00_NAME, PROGRAM_01_NAME, PROGRAM_02_NAME, PROGRAM_03_NAME, PROGRAM_04_NAME, PROGRAM_05_NAME, PROGRAM_06_NAME, PROGRAM_07_NAME, PROGRAM_08_NAME, PROGRAM_09_NAME,
-  PROGRAM_10_NAME, PROGRAM_11_NAME, PROGRAM_12_NAME, PROGRAM_13_NAME, PROGRAM_14_NAME, PROGRAM_15_NAME, PROGRAM_16_NAME, PROGRAM_17_NAME, PROGRAM_18_NAME, PROGRAM_19_NAME,
-  PROGRAM_20_NAME, PROGRAM_21_NAME
-};
+//char* programNames[] = {
+//  PROGRAM_00_NAME, PROGRAM_01_NAME, PROGRAM_02_NAME, PROGRAM_03_NAME, PROGRAM_04_NAME, PROGRAM_05_NAME, PROGRAM_06_NAME, PROGRAM_07_NAME, PROGRAM_08_NAME, PROGRAM_09_NAME,
+//  PROGRAM_10_NAME, PROGRAM_11_NAME, PROGRAM_12_NAME, PROGRAM_13_NAME, PROGRAM_14_NAME, PROGRAM_15_NAME, PROGRAM_16_NAME, PROGRAM_17_NAME, PROGRAM_18_NAME, PROGRAM_19_NAME,
+//  PROGRAM_20_NAME, PROGRAM_21_NAME
+//};
 
 
 #define SINGLE_BOUNCE false
