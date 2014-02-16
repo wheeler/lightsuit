@@ -127,7 +127,7 @@ short bounceRow[] = {-1, num_levels};
 
 int activeRhythmLength = 0;
 
-uint8_t mode = 7;
+uint8_t mode = 3;
 uint8_t brightness = 10;
 
 
