@@ -36,8 +36,8 @@ void setup() {
     // must be changed after calling Wire.begin() (inside pwm.begin())
     TWBR = 12; //  400KHz
 
-    bootSuit();
-    pulse_old();
+    //bootSuit();
+    //pulse_old();
     // Set all outputs low... is this necessary?
     clearSuit();
 
