@@ -1,3 +1,5 @@
+
+// "OFF" program. Turn all levels off once, do nothing else.
 void off()
 {
   if (sequenceNeedsSetup)
@@ -7,11 +9,29 @@ void off()
   }
 }
 
-#define timeShare true //TODO: this wasn't working -- reverse rows appeared brighter
 
-//------------------------------------
-// BRIGHTNESS-AWARE set level methods
-//------------------------------------
+/**
+ * BRIGHTNESS-AWARE set level methods
+ *
+ * Overall Suit Brightness is defined as a number between 1 and 10. This is stored in global
+ * variable "brightness". Programs use brightness commands with numbers 0 - 24. These methods
+ * combine the global brightness and the program brightness to evaluate a correct brightness.
+ *
+ * Only these three functions should be used by programs to make their effects:
+ *
+ * set_level(int level, int zeroToTwentyFour)
+ *   set a suit level to a program brightness from 0 to 24
+ *
+ * set_level_on(int level)
+ *   readable shorthand for set_level(level,24);
+ *
+ * set_level_off(int level)
+ *   readable shorthand for set_level(level,0)
+ *
+ **/
+
+// attempt to reduce peak current by PWMing even rows in the front of 
+#define timeShare true
 
 void set_level(uint8_t level, int zeroToTwentyFour)
 {
@@ -31,17 +51,10 @@ void set_level_off(uint8_t level)
     set_level(level, 0);
 }
 
-int getBrightness(int zeroToTwentyFour)
-{
-    if (brightness == 10)
-        return fadeValues[zeroToTwentyFour];
-    return fadeValues[zeroToTwentyFour] * ((float)brightness / 10.0); //TODO can this math be faster?
-}
-
-
 
 //===================================================================================
 
+//step through all each level on all three pwms and turn it on and off
 void bootSuit()
 {
     // Set all outputs low... is this necessary?
@@ -56,10 +69,9 @@ void bootSuit()
     }
 }
 
-
+// turn all levels off
 void clearSuit()
 {
-    // Set all outputs low... is this necessary?
     for (pin=0;pin<16;pin++) {
         pwmA.setPWM(pin, 0, 0);      
         pwmB.setPWM(pin, 0, 0);      
@@ -75,27 +87,40 @@ void clearSuit()
 // INTERNAL FUNCTIONS
 //------------------------------------------------
 
-
-// Set an LED
-void set_strip(uint8_t i_strip, int startTime, int endTime) {
-    if (i_strip/16 == 0)      pwmA.setPWM(i_strip%16, startTime, endTime);
-    else if (i_strip/16 == 1)      pwmB.setPWM(i_strip%16, startTime, endTime);
-    else if (i_strip/16 == 2)      pwmC.setPWM(i_strip%16, startTime, endTime);
+// get actual brghtness combining the program brightness looked up in fadeValues using index 0-24 and
+// the global brightness 1-10
+int getBrightness(int zeroToTwentyFour)
+{
+    if (brightness == 10)
+        return fadeValues[zeroToTwentyFour];
+    return fadeValues[zeroToTwentyFour] * ((float)brightness / 10.0); //TODO can this math be faster?
 }
 
 
-// Pin veriables for testing
+// Set an individual LED Strip by ID (not a whole level, just a strip).
+// Strip IDs here are 0-47. 0-15 are on PWM A, 16-31 are on PWM B, and 32-
+void set_strip(uint8_t i_strip, int startTime, int endTime) {
+  if (i_strip/16 == 0)
+    pwmA.setPWM(i_strip%16, startTime, endTime);
+  else if (i_strip/16 == 1)
+    pwmB.setPWM(i_strip%16, startTime, endTime);
+  else if (i_strip/16 == 2)
+    pwmC.setPWM(i_strip%16, startTime, endTime);
+}
+
+
+// Pin variables for testing
 int level=0;
 int level_leg=0;    // level of leg, crotch to foot
-int level_waist=0;   // level of body, hips up
+int level_waist=0;  // level of body, hips up
 int level_body=0;   // level of body, hips to neck
 int level_arm=0;    // level of arm, armpit to hand
 int level_head=0;   // level of head, collar to crown
 
 boolean debugLevels = false;
 
-//TODO: rename to test for useages
-// Set suit level
+//TODO: rename to test for useages - TODO: i think this is done?
+// Set a whole suit level. Resolves which strips belong in the level and sets them.
 void set_suit_level(uint8_t level, int startTime, int endTime) {
     if (level > num_levels) return;
     // Calculate levels of different body sections
