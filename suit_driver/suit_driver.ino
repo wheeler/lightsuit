@@ -90,7 +90,8 @@ int step_delay = 50;
 
 // these were mark's values which were being RE-interpreted by REAL PWM
 //short fadeValues[] = {0, 101, 165, 229, 294, 359, 425, 491, 558, 626, 695, 767, 841, 920, 1005, 1097, 1201, 1321, 1462, 1633, 1846, 2118, 2471, 2936, 3559};
-// here are the new values, now RUN through
+// here are the new values, as if they have been run through REAL PWM
+// note the max: 3093. there's not much if any visual difference between that and 4095 so we'll save some power
 short fadeValues[] = {0,2,6,12,21,31,44,58,76,95,117,143,172,206,246,293,352,426,521,651,832,1095,1491,2105,3093};
 
 
@@ -128,7 +129,7 @@ short bounceRow[] = {-1, num_levels};
 int activeRhythmLength = 0;
 
 uint8_t mode = 3;
-uint8_t brightness = 10;
+uint8_t brightness = 1; //for USB testing I might as well set this to 1
 
 
 
