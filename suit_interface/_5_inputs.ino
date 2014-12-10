@@ -210,9 +210,17 @@ void updateRotaryValue()
 
         nextRotaryCheck = millis() + rotaryDebounce;
 
-        if ( rotaryValue > rotaryCap || rotaryValue < 0 )
+        // enforce rotary boundry values
+        if ( rotaryValue > rotaryCap)
         {
-            rotaryValue = rotaryLast;
+            rotaryValue = rotaryCap;
+            resetRotaryAccleration(true);
+            return;
+        }
+        else if ( rotaryValue < 0 )
+        {
+            rotaryValue = 0;
+            resetRotaryAccleration(false);
             return;
         }
             
