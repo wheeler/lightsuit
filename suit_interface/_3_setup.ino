@@ -11,6 +11,7 @@ void setup()
   
   display.setTextSize(1);
   display.setTextColor(WHITE);
+  display.setRotation(0); // '1' would allow looking down the arm at the oled (would require various other code changes)
   display.setCursor(0,0);
   display.println("boot");
   
