@@ -10,18 +10,28 @@ uint8_t gravityTimes[] = {115,  48,  37,  31,  27,  25,  22,  21,  20,  19,  18,
 //TODO: N-Gravity bounce (position sequencer?)
 //TODO: N-bounce with small range
 
+//"double up" is: bounce(SWEEPUP, DOUBLE_BOUNCE);
+
+/**
+ * BOUNCE
+ */
 void bounce(uint8_t type, boolean doubleBounce)
-{
-//    step_delay = 10; //5 is the minimum for this program where it is distinct
-    
+{   
+    //time to move the bouncing lines
     if (millis() > programNextActionTime)
     {
+        // if single bounce, execute once with i = 0
+        // if double bounce, execute also with i = 1
         for (int i=0; (doubleBounce && i<2) || i==0 ;i++)
         {
+          // turn off the row we last visited...
+          // but don't let the "second" bouncer turn off the first which has already been resolved.
           if (!(doubleBounce && (i == 1 && bounceRow[i-1] == bounceRow[i])))
-              set_level_off(bounceRow[i]); //turn off the row we last visited
+              set_level_off(bounceRow[i]); 
+
           if (bounceMovingUp[i])
           {
+              // move the row up
               bounceRow[i]++;
               if (bounceRow[i] >= num_levels)
               {
@@ -36,7 +46,10 @@ void bounce(uint8_t type, boolean doubleBounce)
           }
           else
           {
+            //move the row down
             bounceRow[i]--;
+            
+            //if we've reached the bottom row, change direction or restart
             if (bounceRow[i] < 0)
             {
                 if (type == GRAVITYDOWN)
@@ -48,8 +61,12 @@ void bounce(uint8_t type, boolean doubleBounce)
                 }
             }
           }
+          
+          //turn on the row we have selected.
           set_level_on(bounceRow[i]);
        }
+       
+       //set the next program action time
        if (type == GRAVITY || type == GRAVITYDOWN || type == GRAVITYUP)
            programNextActionTime = millis() + gravityTimes[num_levels - 1 - bounceRow[0]];
        else
