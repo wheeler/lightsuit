@@ -1,4 +1,9 @@
 
+#define batteryOriginX 100
+#define batteryOriginY 53
+#define interfaceOriginX 0
+#define interfaceOriginY 0 //currently must be 0
+
 void runFullDisplay()
 {
   if (displayInvalid && millis() > nextDisplayTime)
@@ -9,12 +14,12 @@ void runFullDisplay()
 
     drawInterface();
     checkInputs();
-    
+
     drawBattery();
     checkInputs();
 
     display.display();
-    
+
     displayInvalid = false;
     nextDisplayTime = millis() + displaySpeed;
   }
@@ -28,8 +33,7 @@ void drawInterface()
   
     if (interfaceState == INTERFACE_CUSTOMIZE_PROGRAM || interfaceState == INTERFACE_CUSTOMIZE_PROGRAM_EDIT)
     {
-        display.setCursor(38, 0);  display.print("Edit ");display.print(programNames[program]);
-        //display.setCursor(33, 8+(rotaryValue*8)); display.print(">");
+        display.setCursor(interfaceOriginX, interfaceOriginY);  display.print("Edit ");display.print(programNames[program]);
         
         for (int i = 0 ; i < number_of_properties ; i++)
         {
@@ -37,7 +41,7 @@ void drawInterface()
                 display.setTextColor(BLACK, WHITE);
             else
                 display.setTextColor(WHITE, BLACK);
-            display.setCursor(38, 8+(i*8));  display.print(propertyNames[i]);
+            display.setCursor(interfaceOriginX, interfaceOriginY + 8 + (i*8));  display.print(propertyNames[i]);
     
             if (i!=0) //zero is "save" which has no values
             {
@@ -62,12 +66,12 @@ void drawInterface()
       
         if (program == rotaryValue && program != 0)
         {
-            display.setCursor(31, (program-programModeScroll)*8);
+            display.setCursor(interfaceOriginX, (program-programModeScroll)*8);
             display.print("E>");
         }
         else
         {
-            display.setCursor(33, (program-programModeScroll)*8);
+            display.setCursor(interfaceOriginX + 2, (program-programModeScroll)*8);
             display.print(">");
         }
         
@@ -77,7 +81,7 @@ void drawInterface()
                 display.setTextColor(BLACK, WHITE);
             else
                 display.setTextColor(WHITE, BLACK);
-            display.setCursor(42, (i-programModeScroll)*8);  display.print(programNames[i]);
+            display.setCursor(interfaceOriginX + 11, (i-programModeScroll)*8);  display.print(programNames[i]);
         }
     }
 
@@ -110,18 +114,18 @@ void drawInterface()
 void drawBattery()
 {
     //Draw a battery
-    display.drawRect(0, 52, 26, 11, WHITE);
-    display.drawRect(25, 54, 3, 7, WHITE);
+    display.drawRect(batteryOriginX, batteryOriginY, 26, 11, WHITE);
+    display.drawRect(batteryOriginX + 25, batteryOriginY + 2, 3, 7, WHITE);
     display.setTextSize(1);
     display.setTextColor(WHITE);
     
     //adjust cursor position to make the text centered
     if (batteryLife >= 100) 
-        display.setCursor(1,54); //position for 4 chars
+        display.setCursor(batteryOriginX + 1, batteryOriginY + 2); //position for 4 chars
     else if (batteryLife >= 10 || batteryLife < 0) 
-        display.setCursor(4,54); //position for 3 chars
+        display.setCursor(batteryOriginX + 4, batteryOriginY + 2); //position for 3 chars
     else
-        display.setCursor(8,54); //position for 2 chars
+        display.setCursor(batteryOriginX + 8, batteryOriginY + 2); //position for 2 chars
 
     //print the battery value
     display.print(batteryLife);
