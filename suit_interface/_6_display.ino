@@ -4,10 +4,9 @@ void runFullDisplay()
   if (displayInvalid && millis() > nextDisplayTime)
   {
     display.clearDisplay();
-    drawManOutline();
+    //drawManOutline();
     checkInputs();
-    
-    
+
     drawInterface();
     checkInputs();
     
@@ -84,28 +83,28 @@ void drawInterface()
 
 }
 
-void drawManOutline()
-{
-    display.drawFastHLine(9,0,10,WHITE); //top of head
-    display.drawFastVLine( 8,1,9,WHITE); //left side of head
-    display.drawFastVLine(19,1,9,WHITE); //right side of head
-    
-    display.drawFastHLine( 1,10,8,WHITE); //left shoulder top
-    display.drawFastHLine(19,10,8,WHITE); //right shoulder top
-    
-    display.drawFastVLine( 0,11,21,WHITE); //left arm outside
-    display.drawFastHLine( 1,32, 4,WHITE); //left hand
-    display.drawFastVLine( 5,16,34,WHITE); //left body side
-    display.drawFastVLine(27,11,21,WHITE); //right arm outside
-    display.drawFastHLine(22,32, 5,WHITE); //right hand
-    display.drawFastVLine(22,16,34,WHITE); //right body side
-    
-    display.drawFastHLine(13,32, 2,WHITE); //crotch
-    display.drawFastVLine(12,33,17,WHITE); //left inseam
-    display.drawFastHLine( 6,50, 6,WHITE); //left foot
-    display.drawFastVLine(15,33,17,WHITE); //right inseam
-    display.drawFastHLine(16,50, 6,WHITE); //right foot
-}
+//void drawManOutline()
+//{
+//    display.drawFastHLine(9,0,10,WHITE); //top of head
+//    display.drawFastVLine( 8,1,9,WHITE); //left side of head
+//    display.drawFastVLine(19,1,9,WHITE); //right side of head
+//    
+//    display.drawFastHLine( 1,10,8,WHITE); //left shoulder top
+//    display.drawFastHLine(19,10,8,WHITE); //right shoulder top
+//    
+//    display.drawFastVLine( 0,11,21,WHITE); //left arm outside
+//    display.drawFastHLine( 1,32, 4,WHITE); //left hand
+//    display.drawFastVLine( 5,16,34,WHITE); //left body side
+//    display.drawFastVLine(27,11,21,WHITE); //right arm outside
+//    display.drawFastHLine(22,32, 5,WHITE); //right hand
+//    display.drawFastVLine(22,16,34,WHITE); //right body side
+//    
+//    display.drawFastHLine(13,32, 2,WHITE); //crotch
+//    display.drawFastVLine(12,33,17,WHITE); //left inseam
+//    display.drawFastHLine( 6,50, 6,WHITE); //left foot
+//    display.drawFastVLine(15,33,17,WHITE); //right inseam
+//    display.drawFastHLine(16,50, 6,WHITE); //right foot
+//}
 
 
 void drawBattery()
