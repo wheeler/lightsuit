@@ -17,6 +17,10 @@ void setup() {
     randomSeed(analogRead(3));
     Serial.begin(115200);
     Serial1.begin(115200);
+    
+    while (!Serial) {
+      ; // wait for serial port to connect. Needed for Leonardo only
+    }
     Serial.println("\n48 channel PWM test");
 
     Serial.print("starting PCA's, frequency: ");
@@ -42,7 +46,7 @@ void setup() {
     clearSuit();
 
     programResets();
-    
+
 }
 
 
