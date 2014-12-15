@@ -33,9 +33,10 @@ uint8_t analog_1_y = 0;
 uint8_t analog_1_z = 0;
 
 // Set up PCA9685 drivers
-Adafruit_PWMServoDriver pwmA = Adafruit_PWMServoDriver(0x40);
-Adafruit_PWMServoDriver pwmB = Adafruit_PWMServoDriver(0x45);
-Adafruit_PWMServoDriver pwmC = Adafruit_PWMServoDriver(0x46);
+// each driver is addressed on its board with binary jumpers 
+Adafruit_PWMServoDriver pwmA = Adafruit_PWMServoDriver(0x40); // "0" has no jumpers soldered
+Adafruit_PWMServoDriver pwmB = Adafruit_PWMServoDriver(0x45); // "5" has A0 & A2 jumpers soldered (1+0+4 = 5)
+Adafruit_PWMServoDriver pwmC = Adafruit_PWMServoDriver(0x46); // "6" has A1 & A2 jumpers soldered (0+2+4 = 6)
 
 // PCA9685 parameters
 #define pca_freq 160
