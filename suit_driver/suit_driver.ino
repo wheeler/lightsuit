@@ -1,5 +1,6 @@
 /*************************************************** 
- * I2C For Arduino: SCLOCK -> Analog 5, SDATA -> Analog 4
+ * I2C For NORMAL Arduino: SCLOCK -> Analog 5, SDATA -> Analog 4
+ * ... BUT FOR LEONARDO: SCLOCK -> 3, SDATA -> 2
  ****************************************************/
 
 #include <Wire.h>
